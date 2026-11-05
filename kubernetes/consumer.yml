@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tournaments-consumer
+  namespace: tournaments
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tournaments-consumer
+  template:
+    metadata:
+      labels:
+        app: tournaments-consumer
+    spec:
+      containers:
+        - name: consumer
+          image: localhost/tournaments-consumer:dev
+          imagePullPolicy: Never
+          envFrom:
+            - configMapRef:
+                name: tournaments-app-config

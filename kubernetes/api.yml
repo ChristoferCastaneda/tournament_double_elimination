@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tournaments-api
+  namespace: tournaments
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tournaments-api
+  template:
+    metadata:
+      labels:
+        app: tournaments-api
+    spec:
+      containers:
+        - name: api
+          image: localhost/tournaments-api:v10
+          imagePullPolicy: Never
+          resources:
+            requests:
+              cpu: 250m
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: tournaments-app-config
+          env:
+            - name: ASPNETCORE_HTTP_PORTS
+              value: "8080"
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: http://tempo.monitoring.svc.cluster.local:4317
+            - name: OTEL_EXPORTER_OTLP_PROTOCOL
+              value: grpc
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tournaments-api
+  namespace: tournaments
+  labels:
+    app: tournaments-api
+spec:
+  type: NodePort
+  selector:
+    app: tournaments-api
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+      nodePort: 30080

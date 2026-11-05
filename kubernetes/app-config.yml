@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tournaments-app-config
+  namespace: tournaments
+data:
+  ConnectionStrings__Tournaments: "Host=tournament-db.tournaments.svc.cluster.local;Port=5432;Database=tournament_db;Username=tournament_svc;Password=password;Maximum Pool Size=2"
+  ActiveMq__BrokerUri: "activemq:failover:(tcp://artemis:61616)"
