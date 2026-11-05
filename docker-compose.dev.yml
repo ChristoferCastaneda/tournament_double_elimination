@@ -43,7 +43,9 @@ services:
         condition: service_healthy
     environment:
       ConnectionStrings__DefaultConnection: "Host=tournament_db;Port=5432;Database=tournament_db;Username=tournament_svc;Password=password"
-      TEST_POSTGRES: "Host=tournament_db;Port=5432;Database=tournament_db;Username=tournament_svc;Password=password"
+      # Las pruebas de Postgres crean y borran una base por test, y tournament_svc no tiene permiso
+      # para crear bases. Por eso aquí se usa el usuario postgres; la API sigue con tournament_svc.
+      TEST_POSTGRES: "Host=tournament_db;Port=5432;Username=postgres;Password=password"
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:8080
     volumes:

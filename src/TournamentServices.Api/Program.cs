@@ -19,6 +19,14 @@ var app = builder.Build();
 
 app.UseExceptionHandler();
 
+// UseDefaultFiles tiene que ir antes que UseStaticFiles para que "/" encuentre index.html.
+// Con no-cache el navegador revalida cada archivo y los cambios se ven con solo recargar.
+app.UseDefaultFiles();
+app.UseStaticFiles(new StaticFileOptions
+{
+    OnPrepareResponse = ctx => ctx.Context.Response.Headers.CacheControl = "no-cache"
+});
+
 app.MapGet("/health", () => "Services running");
 app.MapTeamRoutes();
 app.MapTournamentRoutes();
