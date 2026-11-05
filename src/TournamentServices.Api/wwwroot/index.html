@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Torneo de doble eliminación</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Pixelify+Sans:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="hero-fighter" id="hero-fighter"></div>
+    <div class="brand">
+      <h1>Torneo de doble eliminación</h1>
+      <p class="api-status" id="api-status" data-state="checking">Conectando con la API…</p>
+    </div>
+    <nav class="steps" aria-label="Pasos del torneo">
+      <a href="#equipos" data-section="equipos"><span class="step-num">1</span> Equipos</a>
+      <a href="#torneo" data-section="torneo"><span class="step-num">2</span> Torneo</a>
+      <a href="#bracket" data-section="bracket"><span class="step-num">3</span> Bracket</a>
+    </nav>
+  </header>
+
+  <p class="file-warning" id="file-warning" hidden>
+    Esta página tiene que abrirse desde la API, no como archivo.
+    Levanta la API y entra a <a href="http://localhost:8081">http://localhost:8081</a>.
+  </p>
+
+  <main>
+    <section id="section-equipos" class="section" hidden></section>
+    <section id="section-torneo" class="section" hidden></section>
+    <section id="section-bracket" class="section section-wide" hidden></section>
+  </main>
+
+  <dialog id="score-dialog" class="score-dialog" aria-labelledby="score-title">
+    <form method="dialog" id="score-form" novalidate>
+      <h2 id="score-title">Capturar marcador</h2>
+      <p class="score-round" id="score-round"></p>
+      <div class="score-row">
+        <label for="score-home" id="score-home-label"></label>
+        <input id="score-home" name="home" type="number" inputmode="numeric" min="0" max="999" step="1" required>
+      </div>
+      <div class="score-row">
+        <label for="score-visitor" id="score-visitor-label"></label>
+        <input id="score-visitor" name="visitor" type="number" inputmode="numeric" min="0" max="999" step="1" required>
+      </div>
+      <p class="form-error" id="score-error" role="alert"></p>
+      <div class="dialog-actions">
+        <button type="button" class="btn btn-quiet" id="score-cancel">Cancelar</button>
+        <button type="submit" class="btn btn-primary" id="score-save">Guardar marcador</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
