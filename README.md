@@ -1,4 +1,44 @@
-Como levantar el proyecto:
+# Tournament Services · Doble eliminación 🏆
+
+API REST e interfaz web para organizar **torneos de doble eliminación**: registrar equipos, armar el bracket, capturar marcadores y llegar al campeón.
+
+## Overview
+
+- **Equipos y grupos**: altas, bajas y cambios, e inscripción de equipos en un torneo.
+- **Bracket de doble eliminación**: al iniciar el torneo se sortean los equipos (`RandomTeamSeeder`) y se arman los lados de ganadores y perdedores (`DoubleEliminationBracket`). Quien pierde una vez baja al lado de perdedores; quien pierde dos veces queda fuera.
+- **Partidos**: captura de marcadores con `PATCH /bracket/matches/{matchId}/score`; el ganador avanza solo y el campeón sale de `GET /champion`.
+- **Interfaz web** sin librerías ni compilación (`wwwroot/`) para recorrer el torneo como usuario, con "Simular ronda" y "Simular todo" para demos.
+- **Pruebas** de la API contra PostgreSQL real (`tests/`).
+
+## Tecnologías
+
+.NET 10 · ASP.NET Core Minimal APIs · Entity Framework Core · PostgreSQL 17 · FluentValidation · Docker / Podman · Dev Containers
+
+## Arquitectura
+
+```
+src/TournamentServices.Api           Rutas, middleware e interfaz web (wwwroot)
+src/TournamentServices.Delegates     Lógica de aplicación (torneo, grupos, partidos, bracket)
+src/TournamentServices.Domain        Entidades, bracket de doble eliminación y excepciones
+src/TournamentServices.Repositories  EF Core + PostgreSQL
+tests/TournamentServices.Api.Tests   Pruebas de la API
+```
+
+Más detalles para correr y probar en [`PRUEBAS.md`](PRUEBAS.md).
+
+## Equipo
+
+Repositorio original: [ivanfmm/tournament_double_elimination](https://github.com/ivanfmm/tournament_double_elimination).
+
+- [ivanfmm](https://github.com/ivanfmm)
+- Christofer Castañeda
+- [Efrain012](https://github.com/Efrain012)
+- [ivanGCetys](https://github.com/ivanGCetys)
+
+---
+
+## Cómo levantar el proyecto
+
 
 1. En fedora crea la carpeta del proyecto y entra en ella
     mkdir tu-proyecto && cd tu-proyecto
